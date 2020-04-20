@@ -1,6 +1,7 @@
 package YahtzeeAI;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * class DiceHand takes in a number of dice, number of sides per
@@ -57,8 +58,15 @@ public class DiceHand {
         for(DieObject dieObject: this.getDiceHand()){
             dieObject.roll();
         }
+        this.sortHand();
     }
+
     // TODO: sort the dice by value smallest to largest
+    private final Comparator<DieObject> compareByRoll = Comparator.comparingInt(DieObject::getRoll);
+
+    private void sortHand(){
+        this.getDiceHand().sort(compareByRoll);
+    }
 
     /**
      * @return Array List of die objects: diceHand
@@ -74,7 +82,7 @@ public class DiceHand {
     @Override
     public String toString(){
         StringBuilder handOut = new StringBuilder();
-        handOut.append(this.getDiceHand().size() + " Dice hand: ");
+        handOut.append(this.getDiceHand().size()).append(" Dice hand: ");
         for (DieObject dieObject : this.getDiceHand()) {
             handOut.append(dieObject.getRoll()).append(" ");
         }

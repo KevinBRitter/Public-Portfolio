@@ -10,7 +10,7 @@ import java.util.Random;
 public class DieObject {
     private int numSides;
     private int rollValue;
-    private Random randNum;
+    private final Random randNum;
 
     /**
      * instantiates the random number variable
