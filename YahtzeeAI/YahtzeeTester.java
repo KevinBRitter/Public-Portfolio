@@ -20,5 +20,6 @@ public class YahtzeeTester {
 
         YahtzeeScoreCard scoreCard = new YahtzeeScoreCard();
         System.out.println(scoreCard);
+        System.out.println(scoreCard.getCard());
     }
 }

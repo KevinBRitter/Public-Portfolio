@@ -61,7 +61,6 @@ public class DiceHand {
         this.sortHand();
     }
 
-    // TODO: sort the dice by value smallest to largest
     private final Comparator<DieObject> compareByRoll = Comparator.comparingInt(DieObject::getRoll);
 
     private void sortHand(){
