@@ -42,65 +42,44 @@ public class YahtzeeScoreCard {
     public void setOnes(int newOnes){
         this.gameScores.set(0, newOnes);
     }
-    public String getOnes(){
-        if (this.gameScores.get(0) > 0 ){
-            return this.gameScores.get(0).toString();
-        }
-        else{ return " "; }
+    public int getOnes(){
+            return this.gameScores.get(0);
     }
     public void setTwos(int newTwos){
         this.gameScores.set(1, newTwos);
     }
-    public String getTwos(){
-        if (this.gameScores.get(1) > 0 ){
-            return this.gameScores.get(1).toString();
-        }
-        else{ return " "; }
+    public int getTwos(){
+        return this.gameScores.get(1);
     }
     public void setThrees(int newThrees){
         this.gameScores.set(2, newThrees);
     }
-    public String getThrees(){
-        if (this.gameScores.get(2) > 0 ){
-            return this.gameScores.get(2).toString();
-        }
-        else{ return " "; }
+    public int getThrees(){
+        return this.gameScores.get(2);
     }
     public void setFours(int newFours){
         this.gameScores.set(3, newFours);
     }
-    public String getFours(){
-        if (this.gameScores.get(3) > 0 ){
-            return this.gameScores.get(3).toString();
-        }
-        else{ return " "; }
+    public int getFours(){
+        return this.gameScores.get(3);
     }
     public void setFives(int newFives){
         this.gameScores.set(4, newFives);
     }
-    public String getFives(){
-        if (this.gameScores.get(4) > 0 ){
-            return this.gameScores.get(4).toString();
-        }
-        else{ return " "; }
+    public int getFives(){
+        return this.gameScores.get(4);
     }
     public void setSixes(int newSixes){
         this.gameScores.set(5, newSixes);
     }
-    public String getSixes(){
-        if (this.gameScores.get(5) > 0 ){
-            return this.gameScores.get(5).toString();
-        }
-        else{ return " "; }
+    public int getSixes(){
+        return this.gameScores.get(5);
     }
     public void setUpperPreTotal(int newUpperPreTotal){
         this.gameScores.set(6, newUpperPreTotal);
     }
-    public String getUpperPreTotal(){
-        if (this.gameScores.get(6) > 0 ){
-            return this.gameScores.get(6).toString();
-        }
-        else{ return " "; }
+    public int getUpperPreTotal(){
+        return this.gameScores.get(6);
     }
     private void calculateUpperPreTotal(){
         int total = 0;
@@ -113,167 +92,238 @@ public class YahtzeeScoreCard {
     }
     private void calculateBonus(){
         this.calculateUpperPreTotal();
-        if(this.gameScores.get(6) >= 63){
+        if(this.getUpperPreTotal() >= 63){
             this.setBonus(35);
         }
-    }
-    private void calculateUpperTotal(){
-        this.calculateBonus();
-        int total = 0;
-        if (this.gameScores.get(6) > 0){
-            total += this.gameScores.get(6);
+        else{
+            this.setBonus(0);
         }
-        if (this.gameScores.get(7) > 0){
-            total += this.gameScores.get(7);
-        }
-        this.setUpperTotal(total);
     }
     public void setBonus(int newBonus){
         this.gameScores.set(7, newBonus);
     }
-    public String getBonus(){
-        if (this.gameScores.get(7) > 0 ){
-            return this.gameScores.get(7).toString();
-        }
-        else{ return " "; }
+    public int getBonus() {
+        return this.gameScores.get(7);
     }
+    private void calculateUpperTotal(){
+        this.calculateBonus();
+        int total = 0;
+        if (this.getUpperPreTotal() > 0){
+            total += this.getUpperPreTotal();
+        }
+        if (this.getBonus() > 0){
+            total += this.getBonus();
+        }
+        this.setUpperTotal(total);
+    }
+
     public void setUpperTotal(int newUpperTotal){
         this.gameScores.set(8, newUpperTotal);
     }
-    public String getUpperTotal(){
-        if (this.gameScores.get(8) > 0 ){
-            return this.gameScores.get(8).toString();
-        }
-        else{ return " "; }
+    public int getUpperTotal(){
+        return this.gameScores.get(8);
     }
     public void setThreeOfKind(int newThreeOfKind){
         this.gameScores.set(9, newThreeOfKind);
     }
-    public String getThreeOfKind(){
-        if (this.gameScores.get(9) > 0 ){
-            return this.gameScores.get(9).toString();
-        }
-        else{ return " "; }
+    public int getThreeOfKind(){
+        return this.gameScores.get(9);
     }
     public void setFourOfKind(int newFourOfKind){
         this.gameScores.set(10, newFourOfKind);
     }
-    public String getFourOfKind(){
-        if (this.gameScores.get(10) > 0 ){
-            return this.gameScores.get(10).toString();
-        }
-        else{ return " "; }
+    public int getFourOfKind(){
+        return this.gameScores.get(10);
     }
     public void setFullHouse(int newFullHouse){
         this.gameScores.set(11, newFullHouse);
     }
-    public String getFullHouse(){
-        if (this.gameScores.get(11) > 0 ){
-            return this.gameScores.get(11).toString();
+    public int getFullHouse(){
+            return this.gameScores.get(11);
         }
-        else{ return " "; }
-    }
     public void setSmallStraight(int newSmallStraight){
         this.gameScores.set(12, newSmallStraight);
     }
-    public String getSmallStraight(){
-        if (this.gameScores.get(12) > 0 ){
-            return this.gameScores.get(12).toString();
-        }
-        else{ return " "; }
+    public int getSmallStraight(){
+        return this.gameScores.get(12);
     }
     public void setLargeStraight(int newLargeStraight){
         this.gameScores.set(13, newLargeStraight);
     }
-    public String getLargeStraight(){
-        if (this.gameScores.get(13) > 0 ){
-            return this.gameScores.get(13).toString();
-        }
-        else{ return " "; }
+    public int getLargeStraight(){
+        return this.gameScores.get(13);
     }
     public void setYahtzee(int newYahtzee){
         this.gameScores.set(14, newYahtzee);
     }
-    public String getYahtzee(){
-        if (this.gameScores.get(14) > 0 ){
-            return this.gameScores.get(14).toString();
-        }
-        else{ return " "; }
+    public int getYahtzee(){
+        return this.gameScores.get(14);
     }
     public void setChance(int newChance){
         this.gameScores.set(15, newChance);
     }
-    public String getChance(){
-        if (this.gameScores.get(15) > 0 ){
-            return this.gameScores.get(15).toString();
-        }
-        else{ return " "; }
+    public int getChance(){
+        return this.gameScores.get(15);
     }
     public void setBonusYahtzee(int newBonusYahtzee){
         this.gameScores.set(16, newBonusYahtzee);
     }
-    public String getBonusYahtzee(){
-        if (this.gameScores.get(16) > 0 ){
-            return this.gameScores.get(16).toString();
-        }
-        else{ return " "; }
+    public int getBonusYahtzee(){
+        return this.gameScores.get(16);
     }
     public void setBonusYahtzeeCount(int newBonusYahtzeeCount){
         this.gameScores.set(17, newBonusYahtzeeCount);
     }
-    public String getBonusYahtzeeCount(){
-        if (this.gameScores.get(17) > 0 ){
-            return this.gameScores.get(17).toString();
-        }
-        else{ return " "; }
+    public int getBonusYahtzeeCount(){
+        return this.gameScores.get(17);
     }
     public void setLowerTotal(int newLowerTotal){
         this.gameScores.set(18, newLowerTotal);
     }
-    public String getLowerTotal(){
-        if (this.gameScores.get(18) > 0 ){
-            return this.gameScores.get(18).toString();
+    public int getLowerTotal(){
+        return this.gameScores.get(18);
+    }
+    public void calculateLowerTotal(){
+        if(this.getBonusYahtzeeCount() > 0){
+            this.setBonusYahtzee(this.getBonusYahtzeeCount() * 100);
         }
-        else{ return " "; }
+        int total = 0;
+        for(int i = 9; i < 17; i++){
+            if(this.gameScores.get(i) > 0){
+                total += this.gameScores.get(i);
+            }
+        }
+        this.setLowerTotal(total);
     }
     public void setGrandTotal(int newGrandTotal){
         this.gameScores.set(19, newGrandTotal);
     }
-    public String getGrandTotal(){
-        if (this.gameScores.get(19) > 0 ){
-            return this.gameScores.get(19).toString();
+    public int getGrandTotal(){
+        return this.gameScores.get(19);
+    }
+    public void calculateGrandTotal(){
+        this.calculateUpperTotal();
+        this.calculateLowerTotal();
+        this.setGrandTotal(this.getUpperTotal() + this.getLowerTotal());
+    }
+
+    public String getValue(String desiredValue){
+        int valueIn = -1;
+        switch (desiredValue){
+            case "Aces":{
+                valueIn = this.getOnes();
+                break;
+            }
+            case "Twos":{
+                valueIn = this.getTwos();
+                break;
+            }
+            case "Threes":{
+                valueIn = this.getThrees();
+                break;
+            }
+            case "Fours":{
+                valueIn = this.getFours();
+                break;
+            }
+            case "Fives":{
+                valueIn = this.getFives();
+                break;
+            }
+            case "Sixes":{
+                valueIn = this.getSixes();
+                break;
+            }
+            case "UpperPreTotal":{
+                valueIn = this.getUpperPreTotal();
+                break;
+            }
+            case "Bonus":{
+                valueIn = this.getBonus();
+                break;
+            }
+            case "UpperTotal":{
+                valueIn = this.getUpperTotal();
+                break;
+            }
+            case "ThreeOfKind":{
+                valueIn = this.getThreeOfKind();
+                break;
+            }
+            case "FourOfKind":{
+                valueIn = this.getFourOfKind();
+                break;
+            }
+            case "FullHouse":{
+                valueIn = this.getFullHouse();
+                break;
+            }
+            case "SmallStraight":{
+                valueIn = this.getSmallStraight();
+                break;
+            }
+            case "LargeStraight":{
+                valueIn = this.getLargeStraight();
+                break;
+            }
+            case "YAHTZEE":{
+                valueIn = this.getYahtzee();
+                break;
+            }
+            case "Chance":{
+                valueIn = this.getChance();
+                break;
+            }
+            case "YahtzeeBonus":{
+                valueIn = this.getBonusYahtzee();
+                break;
+            }
+            case "BonusYahtzeeCount":{
+                valueIn = this.getBonusYahtzeeCount();
+                break;
+            }
+            case "LowerTotal":{
+                valueIn = this.getLowerTotal();
+                break;
+            }
+            case "GrandTotal":{
+                valueIn = this.getGrandTotal();
+                break;
+            }
+        }
+        if (valueIn > 0 ){
+            return ("" + valueIn);
         }
         else{ return " "; }
     }
-
     public String getCard(){
         String lineSpacer = "| %-13s | %2s |\n";
 
         String tempString;
         tempString = "YAHTZEE\n" +
                 "UPPER SECTION\n" +
-                String.format(lineSpacer, "Aces", this.getOnes()) +
-                String.format(lineSpacer, "Twos", this.getTwos()) +
-                String.format(lineSpacer, "Threes", this.getThrees()) +
-                String.format(lineSpacer, "Fours", this.getFours()) +
-                String.format(lineSpacer, "Fives", this.getFives()) +
-                String.format(lineSpacer, "Sixes", this.getSixes()) +
-                String.format(lineSpacer, "Total", this.getUpperPreTotal()) +
-                String.format(lineSpacer, "Bonus", this.getBonus()) +
-                String.format(lineSpacer, "TOTAL", this.getUpperTotal()) +
+                String.format(lineSpacer, "Aces", this.getValue("Aces")) +
+                String.format(lineSpacer, "Twos", this.getValue("Twos")) +
+                String.format(lineSpacer, "Threes", this.getValue("Threes")) +
+                String.format(lineSpacer, "Fours", this.getValue("Fours")) +
+                String.format(lineSpacer, "Fives", this.getValue("Fives")) +
+                String.format(lineSpacer, "Sixes", this.getValue("Sixes")) +
+                String.format(lineSpacer, "Total", this.getValue("UpperPreTotal")) +
+                String.format(lineSpacer, "Bonus", this.getValue("Bonus")) +
+                String.format(lineSpacer, "TOTAL", this.getValue("UpperTotal")) +
                 "LOWER SECTION\n" +
-                String.format(lineSpacer, "3 of a Kind", this.getThreeOfKind()) +
-                String.format(lineSpacer, "4 of a Kind", this.getFourOfKind()) +
-                String.format(lineSpacer, "Full House", this.getFullHouse()) +
-                String.format(lineSpacer, "SM Straight", this.getSmallStraight()) +
-                String.format(lineSpacer, "LG Straight", this.getLargeStraight()) +
-                String.format(lineSpacer, "YAHTZEE", this.getYahtzee()) +
-                String.format(lineSpacer, "Chance", this.getChance()) +
-                String.format(lineSpacer, "Yahtzee Bonus", this.getBonusYahtzee()) +
-                String.format(lineSpacer, "Bonus Count", this.getBonusYahtzeeCount()) +
-                String.format(lineSpacer, "TOTAL", this.getLowerTotal()) +
-                String.format(lineSpacer, "TOTAL", this.getUpperTotal()) +
-                String.format(lineSpacer, "GRAND TOTAL", this.getGrandTotal());
+                String.format(lineSpacer, "3 of a Kind", this.getValue("ThreeOfKind")) +
+                String.format(lineSpacer, "4 of a Kind", this.getValue("FourOfKind")) +
+                String.format(lineSpacer, "Full House", this.getValue("FullHouse")) +
+                String.format(lineSpacer, "SM Straight", this.getValue("SmallStraight")) +
+                String.format(lineSpacer, "LG Straight", this.getValue("LargeStraight")) +
+                String.format(lineSpacer, "YAHTZEE", this.getValue("YAHTZEE")) +
+                String.format(lineSpacer, "Chance", this.getValue("Chance")) +
+                String.format(lineSpacer, "Yahtzee Bonus", this.getValue("YahtzeeBonus")) +
+                String.format(lineSpacer, "Bonus Count", this.getValue("BonusYahtzeeCount")) +
+                String.format(lineSpacer, "TOTAL", this.getValue("LowerTotal")) +
+                String.format(lineSpacer, "TOTAL", this.getValue("UpperTotal")) +
+                String.format(lineSpacer, "GRAND TOTAL", this.getValue("GrandTotal"));
         return tempString;
     }
 
