@@ -33,7 +33,7 @@ public class YahtzeeScoreCard {
             this.gameHands.add(new DiceHand());
         }
     }
-
+// TODO: All these methods should be properly documented.  Save till after finals May 2020.
     private void populateScores(){
         for(int i = 0; i < 20; i++){
             this.gameScores.add(-1);
@@ -207,6 +207,11 @@ public class YahtzeeScoreCard {
         this.setGrandTotal(this.getUpperTotal() + this.getLowerTotal());
     }
 
+    /**
+     * @param desiredValue is a String entry denoting the value to be returned ex. "Aces"
+     * @return a string representation of the value >= 0 else " "
+     * Switch cases allow many varied but identical code blocks, here get value is called.
+     */
     public String getValue(String desiredValue){
         int valueIn = -1;
         switch (desiredValue){
@@ -291,27 +296,35 @@ public class YahtzeeScoreCard {
                 break;
             }
         }
-        if (valueIn > 0 ){
+        if (valueIn >= 0 ){
             return ("" + valueIn);
         }
         else{ return " "; }
     }
+
+    /**
+     * @return String to print Yahtzee score card. Zeros are shown but unused values return empty
+     */
     public String getCard(){
-        String lineSpacer = "| %-13s | %2s |\n";
+        String lineSpacer = "| %-13s | %4s |\n";
+        String frame = "+---------------+------+\n";
 
         String tempString;
         tempString = "YAHTZEE\n" +
                 "UPPER SECTION\n" +
+                frame +
                 String.format(lineSpacer, "Aces", this.getValue("Aces")) +
                 String.format(lineSpacer, "Twos", this.getValue("Twos")) +
                 String.format(lineSpacer, "Threes", this.getValue("Threes")) +
                 String.format(lineSpacer, "Fours", this.getValue("Fours")) +
                 String.format(lineSpacer, "Fives", this.getValue("Fives")) +
                 String.format(lineSpacer, "Sixes", this.getValue("Sixes")) +
-                String.format(lineSpacer, "Total", this.getValue("UpperPreTotal")) +
-                String.format(lineSpacer, "Bonus", this.getValue("Bonus")) +
-                String.format(lineSpacer, "TOTAL", this.getValue("UpperTotal")) +
+                String.format(lineSpacer, "TOTAL", this.getValue("UpperPreTotal")) +
+                String.format(lineSpacer, "BONUS", this.getValue("Bonus")) +
+                String.format(lineSpacer, "TOTAL UPPER", this.getValue("UpperTotal")) +
+                frame +
                 "LOWER SECTION\n" +
+                frame +
                 String.format(lineSpacer, "3 of a Kind", this.getValue("ThreeOfKind")) +
                 String.format(lineSpacer, "4 of a Kind", this.getValue("FourOfKind")) +
                 String.format(lineSpacer, "Full House", this.getValue("FullHouse")) +
@@ -319,11 +332,12 @@ public class YahtzeeScoreCard {
                 String.format(lineSpacer, "LG Straight", this.getValue("LargeStraight")) +
                 String.format(lineSpacer, "YAHTZEE", this.getValue("YAHTZEE")) +
                 String.format(lineSpacer, "Chance", this.getValue("Chance")) +
-                String.format(lineSpacer, "Yahtzee Bonus", this.getValue("YahtzeeBonus")) +
-                String.format(lineSpacer, "Bonus Count", this.getValue("BonusYahtzeeCount")) +
-                String.format(lineSpacer, "TOTAL", this.getValue("LowerTotal")) +
-                String.format(lineSpacer, "TOTAL", this.getValue("UpperTotal")) +
-                String.format(lineSpacer, "GRAND TOTAL", this.getValue("GrandTotal"));
+                String.format(lineSpacer, "YAHTZEE BONUS", this.getValue("YahtzeeBonus")) +
+                String.format(lineSpacer, "BONUS Count", this.getValue("BonusYahtzeeCount")) +
+                String.format(lineSpacer, "TOTAL LOWER", this.getValue("LowerTotal")) +
+                String.format(lineSpacer, "TOTAL UPPER", this.getValue("UpperTotal")) +
+                String.format(lineSpacer, "GRAND TOTAL", this.getValue("GrandTotal")) +
+                frame;
         return tempString;
     }
 

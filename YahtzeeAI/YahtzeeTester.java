@@ -21,5 +21,23 @@ public class YahtzeeTester {
         YahtzeeScoreCard scoreCard = new YahtzeeScoreCard();
         System.out.println(scoreCard);
         System.out.println(scoreCard.getCard());
+
+        // TODO: Turn these sets into a game class that allows play to include die rerolls.
+        scoreCard.setOnes(4);
+        scoreCard.setTwos(0);
+        scoreCard.setThrees(12);
+        scoreCard.setFours(16);
+        scoreCard.setFives(20);
+        scoreCard.setSixes(24);
+        scoreCard.setThreeOfKind(18);
+        scoreCard.setFourOfKind(21);
+        scoreCard.setFullHouse(0);
+        scoreCard.setSmallStraight(0);
+        scoreCard.setLargeStraight(40);
+        scoreCard.setYahtzee(50);
+        scoreCard.setChance(15);
+        scoreCard.setBonusYahtzeeCount(1);
+        scoreCard.calculateGrandTotal();
+        System.out.println(scoreCard.getCard());
     }
 }
