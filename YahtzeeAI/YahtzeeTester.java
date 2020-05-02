@@ -26,6 +26,7 @@ public class YahtzeeTester {
         scoreCard.setOnes(4);
         scoreCard.setTwos(0);
         scoreCard.setThrees(12);
+        System.out.println(scoreCard.getCard());
         scoreCard.setFours(16);
         scoreCard.setFives(20);
         scoreCard.setSixes(24);

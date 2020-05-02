@@ -13,6 +13,11 @@ import java.util.ArrayList;
 public class YahtzeeScoreCard {
     ArrayList<DiceHand> gameHands;
     ArrayList<Integer> gameScores;
+    final int totalHandsForCard = 13;
+    final int allScoresListSize = 20;
+    final int topGroupSize = 6;
+    final int bottomScoresListStart = 9;
+    final int bottomScoresListEnd = 17;
 
     /**
      * default constructor makes a new games worth of rounds
@@ -29,13 +34,13 @@ public class YahtzeeScoreCard {
      * populate game hand method fills the rounds with new hands
      */
     private void populateGameHands(){
-        for(int i = 0; i < 13; i++){
+        for(int i = 0; i < this.totalHandsForCard; i++){
             this.gameHands.add(new DiceHand());
         }
     }
 // TODO: All these methods should be properly documented.  Save till after finals May 2020.
     private void populateScores(){
-        for(int i = 0; i < 20; i++){
+        for(int i = 0; i < allScoresListSize; i++){
             this.gameScores.add(-1);
         }
     }
@@ -83,7 +88,7 @@ public class YahtzeeScoreCard {
     }
     private void calculateUpperPreTotal(){
         int total = 0;
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < this.topGroupSize; i++){
             if(this.gameScores.get(i) > 0){
                 total += this.gameScores.get(i);
             }
@@ -123,6 +128,8 @@ public class YahtzeeScoreCard {
     public int getUpperTotal(){
         return this.gameScores.get(8);
     }
+
+
     public void setThreeOfKind(int newThreeOfKind){
         this.gameScores.set(9, newThreeOfKind);
     }
@@ -188,7 +195,7 @@ public class YahtzeeScoreCard {
             this.setBonusYahtzee(this.getBonusYahtzeeCount() * 100);
         }
         int total = 0;
-        for(int i = 9; i < 17; i++){
+        for(int i = this.bottomScoresListStart; i < this.bottomScoresListEnd; i++){
             if(this.gameScores.get(i) > 0){
                 total += this.gameScores.get(i);
             }
@@ -346,7 +353,7 @@ public class YahtzeeScoreCard {
      */
     public String toString(){
         StringBuilder tempString = new StringBuilder();
-        for(int i = 0; i < this.gameHands.size(); i++){
+        for(int i = 0; i < this.totalHandsForCard; i++){
             tempString.append("Hand: ").append(i + 1).append(", ").append(this.gameHands.get(i)).append("\n");
         }
         return tempString.toString();
