@@ -1,11 +1,11 @@
 package YahtzeeAI;
 
 import java.util.ArrayList;
-
+// TODO: All methods should be properly documented before moving on.
 /**
  * class Yahtzee Score Card creates a series of dice hands each
  * representing a single round in a game.  Each round is played by
- * an agent for up to three turns, or decisions for scoring.  These
+ * an agent for up to three turns, or scored if preferred.  These
  * follow the standard Yahtzee rule book.  At each step the agent is
  * given a list of the current state of the game for evaluation and
  * decision making.
@@ -38,59 +38,86 @@ public class YahtzeeScoreCard {
             this.gameHands.add(new DiceHand());
         }
     }
-// TODO: All these methods should be properly documented.  Save till after finals May 2020.
+
+    /**
+     * All scores given initial value of -1 indicating they haven't been scored yet.
+     */
     private void populateScores(){
+        int defaultValue = -1;
         for(int i = 0; i < allScoresListSize; i++){
-            this.gameScores.add(-1);
+            this.gameScores.add(defaultValue);
         }
     }
-    public void setOnes(int newOnes){
-        this.gameScores.set(0, newOnes);
+
+    /**
+     * Try New Value is used by all score card setters accessible to an agent.  It
+     * checks if a location has already been filled before filling if able.
+     * @param location index of score in ArrayList gameScores
+     * @param newValue value to place at location
+     * @return boolean of whether replace was allowed.
+     */
+    private boolean tryNewValue(int location, int newValue){
+        if(this.gameScores.get(location) == -1){
+            this.gameScores.set(location, newValue);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @param newOnes
+     * @return
+     */
+    public boolean setOnes(int newOnes){
+        return this.tryNewValue(0, newOnes);
     }
     public int getOnes(){
             return this.gameScores.get(0);
     }
-    public void setTwos(int newTwos){
-        this.gameScores.set(1, newTwos);
+    public boolean setTwos(int newTwos){
+        return this.tryNewValue(1, newTwos);
     }
     public int getTwos(){
         return this.gameScores.get(1);
     }
-    public void setThrees(int newThrees){
-        this.gameScores.set(2, newThrees);
+    public boolean setThrees(int newThrees){
+        return this.tryNewValue(2, newThrees);
     }
     public int getThrees(){
         return this.gameScores.get(2);
     }
-    public void setFours(int newFours){
-        this.gameScores.set(3, newFours);
+    public boolean setFours(int newFours){
+        return this.tryNewValue(3, newFours);
     }
     public int getFours(){
         return this.gameScores.get(3);
     }
-    public void setFives(int newFives){
-        this.gameScores.set(4, newFives);
+    public boolean setFives(int newFives){
+        return this.tryNewValue(4, newFives);
     }
     public int getFives(){
         return this.gameScores.get(4);
     }
-    public void setSixes(int newSixes){
-        this.gameScores.set(5, newSixes);
+    public boolean setSixes(int newSixes){
+        return this.tryNewValue(5, newSixes);
     }
     public int getSixes(){
         return this.gameScores.get(5);
     }
-    public void setUpperPreTotal(int newUpperPreTotal){
+    private void setUpperPreTotal(int newUpperPreTotal){
         this.gameScores.set(6, newUpperPreTotal);
     }
-    public int getUpperPreTotal(){
+    private int getUpperPreTotal(){
         return this.gameScores.get(6);
     }
     private void calculateUpperPreTotal(){
         int total = 0;
+        int tempScore;
         for(int i = 0; i < this.topGroupSize; i++){
-            if(this.gameScores.get(i) > 0){
-                total += this.gameScores.get(i);
+            tempScore = this.gameScores.get(i);
+            if(tempScore > 0){
+                total += tempScore;
             }
         }
         this.setUpperPreTotal(total);
@@ -104,10 +131,11 @@ public class YahtzeeScoreCard {
             this.setBonus(0);
         }
     }
-    public void setBonus(int newBonus){
+    private void setBonus(int newBonus){
         this.gameScores.set(7, newBonus);
     }
-    public int getBonus() {
+
+    private int getBonus() {
         return this.gameScores.get(7);
     }
     private void calculateUpperTotal(){
@@ -122,90 +150,104 @@ public class YahtzeeScoreCard {
         this.setUpperTotal(total);
     }
 
-    public void setUpperTotal(int newUpperTotal){
+    private void setUpperTotal(int newUpperTotal){
         this.gameScores.set(8, newUpperTotal);
     }
-    public int getUpperTotal(){
+    private int getUpperTotal(){
         return this.gameScores.get(8);
     }
 
 
-    public void setThreeOfKind(int newThreeOfKind){
-        this.gameScores.set(9, newThreeOfKind);
+    public boolean setThreeOfKind(int newThreeOfKind){
+        return this.tryNewValue(9, newThreeOfKind);
     }
     public int getThreeOfKind(){
         return this.gameScores.get(9);
     }
-    public void setFourOfKind(int newFourOfKind){
-        this.gameScores.set(10, newFourOfKind);
+    public boolean setFourOfKind(int newFourOfKind){
+        return this.tryNewValue(10, newFourOfKind);
     }
     public int getFourOfKind(){
         return this.gameScores.get(10);
     }
-    public void setFullHouse(int newFullHouse){
-        this.gameScores.set(11, newFullHouse);
+    public boolean setFullHouse(int newFullHouse){
+        return this.tryNewValue(11, newFullHouse);
     }
     public int getFullHouse(){
-            return this.gameScores.get(11);
-        }
-    public void setSmallStraight(int newSmallStraight){
-        this.gameScores.set(12, newSmallStraight);
+        return this.gameScores.get(11);
+    }
+    public boolean setSmallStraight(int newSmallStraight){
+        return this.tryNewValue(12, newSmallStraight);
     }
     public int getSmallStraight(){
         return this.gameScores.get(12);
     }
-    public void setLargeStraight(int newLargeStraight){
-        this.gameScores.set(13, newLargeStraight);
+    public boolean setLargeStraight(int newLargeStraight){
+        return this.tryNewValue(13, newLargeStraight);
     }
     public int getLargeStraight(){
         return this.gameScores.get(13);
     }
-    public void setYahtzee(int newYahtzee){
-        this.gameScores.set(14, newYahtzee);
+    public boolean setYahtzee(int newYahtzee){
+        return this.tryNewValue(14, newYahtzee);
     }
     public int getYahtzee(){
         return this.gameScores.get(14);
     }
-    public void setChance(int newChance){
-        this.gameScores.set(15, newChance);
+    public boolean setChance(int newChance){
+        return this.tryNewValue(15, newChance);
     }
     public int getChance(){
         return this.gameScores.get(15);
     }
-    public void setBonusYahtzee(int newBonusYahtzee){
+    private void setBonusYahtzee(int newBonusYahtzee){
         this.gameScores.set(16, newBonusYahtzee);
     }
-    public int getBonusYahtzee(){
+    private int getBonusYahtzee(){
         return this.gameScores.get(16);
     }
-    public void setBonusYahtzeeCount(int newBonusYahtzeeCount){
+    public void incrementBonusYahtzeeCount(){
+        int currentCount = this.getBonusYahtzeeCount();
+        int defaultValue = 1;
+        if(currentCount == -1){
+            this.setBonusYahtzeeCount(defaultValue);
+        }else{
+            currentCount++;
+            this.setBonusYahtzeeCount(currentCount);
+        }
+    }
+    private void setBonusYahtzeeCount(int newBonusYahtzeeCount){
         this.gameScores.set(17, newBonusYahtzeeCount);
     }
-    public int getBonusYahtzeeCount(){
+    private int getBonusYahtzeeCount(){
         return this.gameScores.get(17);
     }
-    public void setLowerTotal(int newLowerTotal){
+
+    private void setLowerTotal(int newLowerTotal){
         this.gameScores.set(18, newLowerTotal);
     }
     public int getLowerTotal(){
         return this.gameScores.get(18);
     }
     public void calculateLowerTotal(){
-        if(this.getBonusYahtzeeCount() > 0){
-            this.setBonusYahtzee(this.getBonusYahtzeeCount() * 100);
+        int currentBonusCount = this.getBonusYahtzeeCount();
+        if(currentBonusCount != -1){
+            this.setBonusYahtzee(currentBonusCount * 100);
         }
         int total = 0;
+        int currentScore;
         for(int i = this.bottomScoresListStart; i < this.bottomScoresListEnd; i++){
-            if(this.gameScores.get(i) > 0){
-                total += this.gameScores.get(i);
+            currentScore = this.gameScores.get(i);
+            if(currentScore > 0){
+                total += currentScore;
             }
         }
         this.setLowerTotal(total);
     }
-    public void setGrandTotal(int newGrandTotal){
+    private void setGrandTotal(int newGrandTotal){
         this.gameScores.set(19, newGrandTotal);
     }
-    public int getGrandTotal(){
+    private int getGrandTotal(){
         return this.gameScores.get(19);
     }
     public void calculateGrandTotal(){
