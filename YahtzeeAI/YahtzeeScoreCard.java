@@ -50,13 +50,13 @@ public class YahtzeeScoreCard {
     }
 
     /**
-     * Try New Value is used by all score card setters accessible to an agent.  It
+     * update scores is used by all score card setters accessible to an agent.  It
      * checks if a location has already been filled before filling if able.
      * @param location index of score in ArrayList gameScores
      * @param newValue value to place at location
      * @return boolean of whether replace was allowed.
      */
-    private boolean tryNewValue(int location, int newValue){
+    private boolean updateScoreIfAllowed(int location, int newValue){
         if(this.gameScores.get(location) == -1){
             this.gameScores.set(location, newValue);
             return true;
@@ -67,40 +67,41 @@ public class YahtzeeScoreCard {
 
     /**
      * @param newOnes
+     *
      * @return
      */
     public boolean setOnes(int newOnes){
-        return this.tryNewValue(0, newOnes);
+        return this.updateScoreIfAllowed(0, newOnes);
     }
     public int getOnes(){
             return this.gameScores.get(0);
     }
     public boolean setTwos(int newTwos){
-        return this.tryNewValue(1, newTwos);
+        return this.updateScoreIfAllowed(1, newTwos);
     }
     public int getTwos(){
         return this.gameScores.get(1);
     }
     public boolean setThrees(int newThrees){
-        return this.tryNewValue(2, newThrees);
+        return this.updateScoreIfAllowed(2, newThrees);
     }
     public int getThrees(){
         return this.gameScores.get(2);
     }
     public boolean setFours(int newFours){
-        return this.tryNewValue(3, newFours);
+        return this.updateScoreIfAllowed(3, newFours);
     }
     public int getFours(){
         return this.gameScores.get(3);
     }
     public boolean setFives(int newFives){
-        return this.tryNewValue(4, newFives);
+        return this.updateScoreIfAllowed(4, newFives);
     }
     public int getFives(){
         return this.gameScores.get(4);
     }
     public boolean setSixes(int newSixes){
-        return this.tryNewValue(5, newSixes);
+        return this.updateScoreIfAllowed(5, newSixes);
     }
     public int getSixes(){
         return this.gameScores.get(5);
@@ -159,43 +160,43 @@ public class YahtzeeScoreCard {
 
 
     public boolean setThreeOfKind(int newThreeOfKind){
-        return this.tryNewValue(9, newThreeOfKind);
+        return this.updateScoreIfAllowed(9, newThreeOfKind);
     }
     public int getThreeOfKind(){
         return this.gameScores.get(9);
     }
     public boolean setFourOfKind(int newFourOfKind){
-        return this.tryNewValue(10, newFourOfKind);
+        return this.updateScoreIfAllowed(10, newFourOfKind);
     }
     public int getFourOfKind(){
         return this.gameScores.get(10);
     }
     public boolean setFullHouse(int newFullHouse){
-        return this.tryNewValue(11, newFullHouse);
+        return this.updateScoreIfAllowed(11, newFullHouse);
     }
     public int getFullHouse(){
         return this.gameScores.get(11);
     }
     public boolean setSmallStraight(int newSmallStraight){
-        return this.tryNewValue(12, newSmallStraight);
+        return this.updateScoreIfAllowed(12, newSmallStraight);
     }
     public int getSmallStraight(){
         return this.gameScores.get(12);
     }
     public boolean setLargeStraight(int newLargeStraight){
-        return this.tryNewValue(13, newLargeStraight);
+        return this.updateScoreIfAllowed(13, newLargeStraight);
     }
     public int getLargeStraight(){
         return this.gameScores.get(13);
     }
     public boolean setYahtzee(int newYahtzee){
-        return this.tryNewValue(14, newYahtzee);
+        return this.updateScoreIfAllowed(14, newYahtzee);
     }
     public int getYahtzee(){
         return this.gameScores.get(14);
     }
     public boolean setChance(int newChance){
-        return this.tryNewValue(15, newChance);
+        return this.updateScoreIfAllowed(15, newChance);
     }
     public int getChance(){
         return this.gameScores.get(15);
