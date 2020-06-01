@@ -7,19 +7,25 @@ public class YahtzeeTester {
         for(int i = 0; i < 20; i++){
             defaultDie.roll();
             die.roll();
-            System.out.printf("Trial: %4d. %23s; %23s.%n" , (i + 1),defaultDie, die);
+            System.out.printf("Die Trial: %2d. Default roll:%2s; 20 sided roll:%3s.%n", (i + 1),defaultDie, die);
         }
 
+        System.out.println();
         DiceHand diceHand = new DiceHand(10);
         DiceHand defaultHand = new DiceHand();
         for(int j = 0; j < 10; j++){
             diceHand.rollHand();
             defaultHand.rollHand();
-            System.out.printf("Trial: %4d. %23s; %23s.%n" , (j + 1),diceHand, defaultHand);
+            System.out.printf("Hand Trial: %2d. %23s; %12s.%n" , (j + 1),diceHand, defaultHand);
         }
 
         YahtzeeScoreCard scoreCard = new YahtzeeScoreCard();
+
+        System.out.println();
+        System.out.println("Scorecard test");
         System.out.println(scoreCard);
+
+        System.out.println();
         System.out.println(scoreCard.getCard());
 
         // TODO: Turn these sets into a game class that allows play to include die re-rolls.

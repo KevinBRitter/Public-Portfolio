@@ -1,9 +1,9 @@
 package YahtzeeAI;
 
 import java.util.ArrayList;
-// TODO: All methods should be properly documented before moving on.
+
 /**
- * class Yahtzee Score Card creates a series of dice hands each
+ * class YahtzeeScoreCard creates a series of dice hands each
  * representing a single round in a game.  Each round is played by
  * an agent for up to three turns, or scored if preferred.  These
  * follow the standard Yahtzee rule book.  At each step the agent is
@@ -11,32 +11,52 @@ import java.util.ArrayList;
  * decision making.
  */
 public class YahtzeeScoreCard {
-    ArrayList<DiceHand> gameHands;
-    ArrayList<Integer> gameScores;
+    private ArrayList<DiceHand> gameHands;
+    private ArrayList<Integer> gameScores;
+    private int currentHand;
     final int totalHandsForCard = 13;
     final int allScoresListSize = 20;
     final int topGroupSize = 6;
     final int bottomScoresListStart = 9;
     final int bottomScoresListEnd = 17;
 
-    /**
-     * default constructor makes a new games worth of rounds
-     * and calls the populate game hands method
-     */
     public YahtzeeScoreCard(){
         this.gameHands = new ArrayList<>();
         this.gameScores = new ArrayList<>();
         this.populateGameHands();
         this.populateScores();
+        this.setCurrentHand(0);
     }
 
-    /**
-     * populate game hand method fills the rounds with new hands
-     */
+    private void setCurrentHand(int handNumber) {
+        this.currentHand = handNumber;
+    }
+
+    private void incrementCurrentHand(){
+        this.currentHand++;
+    }
+
+    public int getCurrentHandNumber(){
+        return this.currentHand;
+    }
+
     private void populateGameHands(){
         for(int i = 0; i < this.totalHandsForCard; i++){
             this.gameHands.add(new DiceHand());
         }
+    }
+
+    /**
+     * gameState returns an ArrayList of the current hand then all current scores.
+     * It is used by an agent to make decisions.
+     */
+    public ArrayList<Integer> getGameState(){
+        ArrayList<Integer> gameState = new ArrayList<>();
+        for (DieObject die: gameHands.get(this.getCurrentHandNumber()).diceHand){
+            gameState.add(die.getRollValue());
+        }
+        gameState.addAll(gameScores);
+        return gameState;
     }
 
     /**
@@ -65,11 +85,6 @@ public class YahtzeeScoreCard {
         }
     }
 
-    /**
-     * @param newOnes
-     *
-     * @return
-     */
     public boolean setOnes(int newOnes){
         return this.updateScoreIfAllowed(0, newOnes);
     }
@@ -157,7 +172,6 @@ public class YahtzeeScoreCard {
     private int getUpperTotal(){
         return this.gameScores.get(8);
     }
-
 
     public boolean setThreeOfKind(int newThreeOfKind){
         return this.updateScoreIfAllowed(9, newThreeOfKind);
@@ -396,8 +410,9 @@ public class YahtzeeScoreCard {
      */
     public String toString(){
         StringBuilder tempString = new StringBuilder();
+        tempString.append("All 13 pre-rolled hands for a game:\n");
         for(int i = 0; i < this.totalHandsForCard; i++){
-            tempString.append("Hand: ").append(i + 1).append(", ").append(this.gameHands.get(i)).append("\n");
+            tempString.append("Hand- ").append(i + 1).append(", ").append(this.gameHands.get(i)).append("\n");
         }
         return tempString.toString();
     }
