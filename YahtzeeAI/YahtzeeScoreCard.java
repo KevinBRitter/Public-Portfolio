@@ -16,6 +16,9 @@ public class YahtzeeScoreCard {
     private HashMap<String, Integer> allScores;
     private int currentHand;
     final int totalHandsForCard = 13;
+    private final String[] scoreNames = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "UpperPreTotal",
+            "Bonus", "UpperTotal", "ThreeOfKind", "FourOfKind", "FullHouse", "SmallStraight", "LargeStraight",
+            "YAHTZEE", "Chance", "BonusYahtzeeCount", "YahtzeeBonus", "LowerTotal", "GrandTotal"};
 
     public YahtzeeScoreCard(){
         this.gameHands = new ArrayList<>();
@@ -52,7 +55,9 @@ public class YahtzeeScoreCard {
         for (DieObject die: gameHands.get(this.getCurrentHandNumber()).diceHand){
             gameState.add(die.getRollValue());
         }
-        gameState.addAll(allScores.values());
+        for(String name: this.scoreNames){
+            gameState.add(this.allScores.get(name));
+        }
         return gameState;
     }
 
@@ -61,10 +66,7 @@ public class YahtzeeScoreCard {
      */
     private void populateScores(){
         int defaultValue = -1;
-        String[] scoreNames = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "UpperPreTotal",
-        "Bonus", "UpperTotal", "ThreeOfKind", "FourOfKind", "FullHouse", "SmallStraight", "LargeStraight",
-        "YAHTZEE", "Chance", "YahtzeeBonus", "BonusYahtzeeCount", "LowerTotal", "GrandTotal"};
-        for(String name: scoreNames){
+        for(String name: this.scoreNames){
             this.allScores.put(name, defaultValue);
         }
     }
