@@ -31,19 +31,20 @@ public class YahtzeeTester {
         // TODO: Turn these sets into a game class that allows play to include die re-rolls.
         System.out.println("Test of value replace.");
         if(scoreCard.setOnes(4)){
-            System.out.println("Trial 1: Ones set to " + scoreCard.getOnes() + " successful");
+            System.out.println("Trial 1: Ones set to " + scoreCard.getValue("Ones") + " successful");
         }else{
-            System.out.println("Trial 1: Ones already has a value of: " + scoreCard.getOnes());
+            System.out.println("Trial 1: Ones already has a value of: " + scoreCard.getValue("Ones"));
         }
         if(scoreCard.setOnes(5)){
-            System.out.println("Trial 2: Ones set to " + scoreCard.getOnes() + " successful");
+            System.out.println("Trial 2: Ones set to " + scoreCard.getValue("Ones") + " successful");
         }else{
-            System.out.println("Trial 2: Ones already has a value of: " + scoreCard.getOnes());
+            System.out.println("Trial 2: Ones already has a value of: " + scoreCard.getValue("Ones"));
         }
         System.out.println();
 
         scoreCard.setTwos(0);
         scoreCard.setThrees(12);
+        System.out.println("State:" + scoreCard.getGameState().toString());
         System.out.println(scoreCard.getCard());
         scoreCard.setFours(16);
         scoreCard.setFives(20);
@@ -57,6 +58,7 @@ public class YahtzeeTester {
         scoreCard.setChance(15);
         scoreCard.incrementBonusYahtzeeCount();
         scoreCard.calculateGrandTotal();
+        System.out.println("State:" + scoreCard.getGameState().toString());
         System.out.println(scoreCard.getCard());
     }
 }

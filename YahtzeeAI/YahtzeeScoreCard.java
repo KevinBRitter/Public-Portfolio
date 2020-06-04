@@ -1,6 +1,7 @@
 package YahtzeeAI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * class YahtzeeScoreCard creates a series of dice hands each
@@ -12,17 +13,13 @@ import java.util.ArrayList;
  */
 public class YahtzeeScoreCard {
     private ArrayList<DiceHand> gameHands;
-    private ArrayList<Integer> gameScores;
+    private HashMap<String, Integer> allScores;
     private int currentHand;
     final int totalHandsForCard = 13;
-    final int allScoresListSize = 20;
-    final int topGroupSize = 6;
-    final int bottomScoresListStart = 9;
-    final int bottomScoresListEnd = 17;
 
     public YahtzeeScoreCard(){
         this.gameHands = new ArrayList<>();
-        this.gameScores = new ArrayList<>();
+        this.allScores = new HashMap<>();
         this.populateGameHands();
         this.populateScores();
         this.setCurrentHand(0);
@@ -55,7 +52,7 @@ public class YahtzeeScoreCard {
         for (DieObject die: gameHands.get(this.getCurrentHandNumber()).diceHand){
             gameState.add(die.getRollValue());
         }
-        gameState.addAll(gameScores);
+        gameState.addAll(allScores.values());
         return gameState;
     }
 
@@ -64,21 +61,17 @@ public class YahtzeeScoreCard {
      */
     private void populateScores(){
         int defaultValue = -1;
-        for(int i = 0; i < allScoresListSize; i++){
-            this.gameScores.add(defaultValue);
+        String[] scoreNames = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "UpperPreTotal",
+        "Bonus", "UpperTotal", "ThreeOfKind", "FourOfKind", "FullHouse", "SmallStraight", "LargeStraight",
+        "YAHTZEE", "Chance", "YahtzeeBonus", "BonusYahtzeeCount", "LowerTotal", "GrandTotal"};
+        for(String name: scoreNames){
+            this.allScores.put(name, defaultValue);
         }
     }
 
-    /**
-     * update scores is used by all score card setters accessible to an agent.  It
-     * checks if a location has already been filled before filling if able.
-     * @param location index of score in ArrayList gameScores
-     * @param newValue value to place at location
-     * @return boolean of whether replace was allowed.
-     */
-    private boolean updateScoreIfAllowed(int location, int newValue){
-        if(this.gameScores.get(location) == -1){
-            this.gameScores.set(location, newValue);
+    private boolean updateScoreIfAllowed(String location, int newValue){
+        if(this.allScores.get(location) == -1){
+            this.allScores.replace(location, newValue);
             return true;
         }else{
             return false;
@@ -86,73 +79,66 @@ public class YahtzeeScoreCard {
     }
 
     public boolean setOnes(int newOnes){
-        return this.updateScoreIfAllowed(0, newOnes);
+        return this.updateScoreIfAllowed("Ones", newOnes);
     }
-    public int getOnes(){
-            return this.gameScores.get(0);
+    private int getOnes(){
+            return this.allScores.get("Ones");
     }
     public boolean setTwos(int newTwos){
-        return this.updateScoreIfAllowed(1, newTwos);
+        return this.updateScoreIfAllowed("Twos", newTwos);
     }
-    public int getTwos(){
-        return this.gameScores.get(1);
+    private int getTwos(){
+        return this.allScores.get("Twos");
     }
     public boolean setThrees(int newThrees){
-        return this.updateScoreIfAllowed(2, newThrees);
+        return this.updateScoreIfAllowed("Threes", newThrees);
     }
-    public int getThrees(){
-        return this.gameScores.get(2);
+    private int getThrees(){
+        return this.allScores.get("Threes");
     }
     public boolean setFours(int newFours){
-        return this.updateScoreIfAllowed(3, newFours);
+        return this.updateScoreIfAllowed("Fours", newFours);
     }
-    public int getFours(){
-        return this.gameScores.get(3);
+    private int getFours(){
+        return this.allScores.get("Fours");
     }
     public boolean setFives(int newFives){
-        return this.updateScoreIfAllowed(4, newFives);
+        return this.updateScoreIfAllowed("Fives", newFives);
     }
-    public int getFives(){
-        return this.gameScores.get(4);
+    private int getFives(){
+        return this.allScores.get("Fives");
     }
     public boolean setSixes(int newSixes){
-        return this.updateScoreIfAllowed(5, newSixes);
+        return this.updateScoreIfAllowed("Sixes", newSixes);
     }
-    public int getSixes(){
-        return this.gameScores.get(5);
+    private int getSixes(){
+        return this.allScores.get("Sixes");
     }
     private void setUpperPreTotal(int newUpperPreTotal){
-        this.gameScores.set(6, newUpperPreTotal);
+        this.allScores.replace("UpperPreTotal", newUpperPreTotal);
     }
     private int getUpperPreTotal(){
-        return this.gameScores.get(6);
+        return this.allScores.get("UpperPreTotal");
     }
     private void calculateUpperPreTotal(){
-        int total = 0;
-        int tempScore;
-        for(int i = 0; i < this.topGroupSize; i++){
-            tempScore = this.gameScores.get(i);
-            if(tempScore > 0){
-                total += tempScore;
-            }
-        }
+        int total = this.getOnes() + this.getTwos() + this.getThrees() +
+                this.getFours() + this.getFives() + this.getSixes();
         this.setUpperPreTotal(total);
     }
     private void calculateBonus(){
         this.calculateUpperPreTotal();
-        if(this.getUpperPreTotal() >= 63){
-            this.setBonus(35);
+        int bonusThreshold = 63;
+        int bonusScore = 0;
+        if(this.getUpperPreTotal() >= bonusThreshold){
+            bonusScore += 35;
         }
-        else{
-            this.setBonus(0);
-        }
+        this.setBonus(bonusScore);
     }
     private void setBonus(int newBonus){
-        this.gameScores.set(7, newBonus);
+        this.allScores.replace("Bonus", newBonus);
     }
-
     private int getBonus() {
-        return this.gameScores.get(7);
+        return this.allScores.get("Bonus");
     }
     private void calculateUpperTotal(){
         this.calculateBonus();
@@ -165,61 +151,60 @@ public class YahtzeeScoreCard {
         }
         this.setUpperTotal(total);
     }
-
     private void setUpperTotal(int newUpperTotal){
-        this.gameScores.set(8, newUpperTotal);
+        this.allScores.replace("UpperTotal", newUpperTotal);
     }
     private int getUpperTotal(){
-        return this.gameScores.get(8);
+        return this.allScores.get("UpperTotal");
     }
 
     public boolean setThreeOfKind(int newThreeOfKind){
-        return this.updateScoreIfAllowed(9, newThreeOfKind);
+        return this.updateScoreIfAllowed("ThreeOfKind", newThreeOfKind);
     }
-    public int getThreeOfKind(){
-        return this.gameScores.get(9);
+    private int getThreeOfKind(){
+        return this.allScores.get("ThreeOfKind");
     }
     public boolean setFourOfKind(int newFourOfKind){
-        return this.updateScoreIfAllowed(10, newFourOfKind);
+        return this.updateScoreIfAllowed("FourOfKind", newFourOfKind);
     }
-    public int getFourOfKind(){
-        return this.gameScores.get(10);
+    private int getFourOfKind(){
+        return this.allScores.get("FourOfKind");
     }
     public boolean setFullHouse(int newFullHouse){
-        return this.updateScoreIfAllowed(11, newFullHouse);
+        return this.updateScoreIfAllowed("FullHouse", newFullHouse);
     }
-    public int getFullHouse(){
-        return this.gameScores.get(11);
+    private int getFullHouse(){
+        return this.allScores.get("FullHouse");
     }
     public boolean setSmallStraight(int newSmallStraight){
-        return this.updateScoreIfAllowed(12, newSmallStraight);
+        return this.updateScoreIfAllowed("SmallStraight", newSmallStraight);
     }
-    public int getSmallStraight(){
-        return this.gameScores.get(12);
+    private int getSmallStraight(){
+        return this.allScores.get("SmallStraight");
     }
     public boolean setLargeStraight(int newLargeStraight){
-        return this.updateScoreIfAllowed(13, newLargeStraight);
+        return this.updateScoreIfAllowed("LargeStraight", newLargeStraight);
     }
-    public int getLargeStraight(){
-        return this.gameScores.get(13);
+    private int getLargeStraight(){
+        return this.allScores.get("LargeStraight");
     }
     public boolean setYahtzee(int newYahtzee){
-        return this.updateScoreIfAllowed(14, newYahtzee);
+        return this.updateScoreIfAllowed("YAHTZEE", newYahtzee);
     }
-    public int getYahtzee(){
-        return this.gameScores.get(14);
+    private int getYahtzee(){
+        return this.allScores.get("YAHTZEE");
     }
     public boolean setChance(int newChance){
-        return this.updateScoreIfAllowed(15, newChance);
+        return this.updateScoreIfAllowed("Chance", newChance);
     }
-    public int getChance(){
-        return this.gameScores.get(15);
+    private int getChance(){
+        return this.allScores.get("Chance");
     }
     private void setBonusYahtzee(int newBonusYahtzee){
-        this.gameScores.set(16, newBonusYahtzee);
+        this.allScores.replace("YahtzeeBonus", newBonusYahtzee);
     }
     private int getBonusYahtzee(){
-        return this.gameScores.get(16);
+        return this.allScores.get("YahtzeeBonus");
     }
     public void incrementBonusYahtzeeCount(){
         int currentCount = this.getBonusYahtzeeCount();
@@ -232,38 +217,32 @@ public class YahtzeeScoreCard {
         }
     }
     private void setBonusYahtzeeCount(int newBonusYahtzeeCount){
-        this.gameScores.set(17, newBonusYahtzeeCount);
+        this.allScores.replace("BonusYahtzeeCount", newBonusYahtzeeCount);
     }
     private int getBonusYahtzeeCount(){
-        return this.gameScores.get(17);
+        return this.allScores.get("BonusYahtzeeCount");
     }
 
     private void setLowerTotal(int newLowerTotal){
-        this.gameScores.set(18, newLowerTotal);
+        this.allScores.replace("LowerTotal", newLowerTotal);
     }
-    public int getLowerTotal(){
-        return this.gameScores.get(18);
+    private int getLowerTotal(){
+        return this.allScores.get("LowerTotal");
     }
-    public void calculateLowerTotal(){
+    private void calculateLowerTotal(){
         int currentBonusCount = this.getBonusYahtzeeCount();
         if(currentBonusCount != -1){
             this.setBonusYahtzee(currentBonusCount * 100);
         }
-        int total = 0;
-        int currentScore;
-        for(int i = this.bottomScoresListStart; i < this.bottomScoresListEnd; i++){
-            currentScore = this.gameScores.get(i);
-            if(currentScore > 0){
-                total += currentScore;
-            }
-        }
+        int total = this.getThreeOfKind() + this.getFourOfKind() + this.getFullHouse() +  this.getSmallStraight()
+                + this.getLargeStraight() + this.getYahtzee() + this.getChance() + this.getBonusYahtzee();
         this.setLowerTotal(total);
     }
     private void setGrandTotal(int newGrandTotal){
-        this.gameScores.set(19, newGrandTotal);
+        this.allScores.replace("GrandTotal", newGrandTotal);
     }
     private int getGrandTotal(){
-        return this.gameScores.get(19);
+        return this.allScores.get("GrandTotal");
     }
     public void calculateGrandTotal(){
         this.calculateUpperTotal();
@@ -271,95 +250,8 @@ public class YahtzeeScoreCard {
         this.setGrandTotal(this.getUpperTotal() + this.getLowerTotal());
     }
 
-    /**
-     * @param desiredValue is a String entry denoting the value to be returned ex. "Aces"
-     * @return a string representation of the value >= 0 else " "
-     * Switch cases allow many varied but identical code blocks, here get value is called.
-     */
     public String getValue(String desiredValue){
-        int valueIn = -1;
-        switch (desiredValue){
-            case "Aces":{
-                valueIn = this.getOnes();
-                break;
-            }
-            case "Twos":{
-                valueIn = this.getTwos();
-                break;
-            }
-            case "Threes":{
-                valueIn = this.getThrees();
-                break;
-            }
-            case "Fours":{
-                valueIn = this.getFours();
-                break;
-            }
-            case "Fives":{
-                valueIn = this.getFives();
-                break;
-            }
-            case "Sixes":{
-                valueIn = this.getSixes();
-                break;
-            }
-            case "UpperPreTotal":{
-                valueIn = this.getUpperPreTotal();
-                break;
-            }
-            case "Bonus":{
-                valueIn = this.getBonus();
-                break;
-            }
-            case "UpperTotal":{
-                valueIn = this.getUpperTotal();
-                break;
-            }
-            case "ThreeOfKind":{
-                valueIn = this.getThreeOfKind();
-                break;
-            }
-            case "FourOfKind":{
-                valueIn = this.getFourOfKind();
-                break;
-            }
-            case "FullHouse":{
-                valueIn = this.getFullHouse();
-                break;
-            }
-            case "SmallStraight":{
-                valueIn = this.getSmallStraight();
-                break;
-            }
-            case "LargeStraight":{
-                valueIn = this.getLargeStraight();
-                break;
-            }
-            case "YAHTZEE":{
-                valueIn = this.getYahtzee();
-                break;
-            }
-            case "Chance":{
-                valueIn = this.getChance();
-                break;
-            }
-            case "YahtzeeBonus":{
-                valueIn = this.getBonusYahtzee();
-                break;
-            }
-            case "BonusYahtzeeCount":{
-                valueIn = this.getBonusYahtzeeCount();
-                break;
-            }
-            case "LowerTotal":{
-                valueIn = this.getLowerTotal();
-                break;
-            }
-            case "GrandTotal":{
-                valueIn = this.getGrandTotal();
-                break;
-            }
-        }
+        int valueIn = this.allScores.get(desiredValue);
         if (valueIn >= 0 ){
             return ("" + valueIn);
         }
@@ -377,7 +269,7 @@ public class YahtzeeScoreCard {
         tempString = "YAHTZEE\n" +
                 "UPPER SECTION\n" +
                 frame +
-                String.format(lineSpacer, "Aces", this.getValue("Aces")) +
+                String.format(lineSpacer, "Ones", this.getValue("Ones")) +
                 String.format(lineSpacer, "Twos", this.getValue("Twos")) +
                 String.format(lineSpacer, "Threes", this.getValue("Threes")) +
                 String.format(lineSpacer, "Fours", this.getValue("Fours")) +
@@ -396,8 +288,8 @@ public class YahtzeeScoreCard {
                 String.format(lineSpacer, "LG Straight", this.getValue("LargeStraight")) +
                 String.format(lineSpacer, "YAHTZEE", this.getValue("YAHTZEE")) +
                 String.format(lineSpacer, "Chance", this.getValue("Chance")) +
-                String.format(lineSpacer, "YAHTZEE BONUS", this.getValue("YahtzeeBonus")) +
                 String.format(lineSpacer, "BONUS Count", this.getValue("BonusYahtzeeCount")) +
+                String.format(lineSpacer, "YAHTZEE BONUS", this.getValue("YahtzeeBonus")) +
                 String.format(lineSpacer, "TOTAL LOWER", this.getValue("LowerTotal")) +
                 String.format(lineSpacer, "TOTAL UPPER", this.getValue("UpperTotal")) +
                 String.format(lineSpacer, "GRAND TOTAL", this.getValue("GrandTotal")) +
