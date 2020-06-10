@@ -130,10 +130,7 @@ public class YahtzeeScoreCard {
     private void calculateBonus(){
         this.calculateUpperPreTotal();
         int bonusThreshold = 63;
-        int bonusScore = 0;
-        if(this.getUpperPreTotal() >= bonusThreshold){
-            bonusScore += 35;
-        }
+        int bonusScore = this.getUpperPreTotal() >= bonusThreshold ? 35 : 0;
         this.setBonus(bonusScore);
     }
     private void setBonus(int newBonus){

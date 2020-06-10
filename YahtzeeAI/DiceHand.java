@@ -45,13 +45,13 @@ public class DiceHand {
     /**
      * Comparator allows sorting die by integer values when called.
      */
-    private final Comparator<DieObject> compareDiceByValue = Comparator.comparingInt(DieObject::getRollValue);
+    private final Comparator<DieObject> withDiceValueComparator = Comparator.comparingInt(DieObject::getRollValue);
 
     /**
      * Sorts a hand of die in ascending order using comparator.
      */
     private void sortHand(){
-        this.getDiceHand().sort(compareDiceByValue);
+        this.getDiceHand().sort(withDiceValueComparator);
     }
 
     private ArrayList<DieObject> getDiceHand(){
