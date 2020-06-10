@@ -8,27 +8,17 @@ import java.util.Random;
  * The default number of sides is 6.
  */
 public class DieObject {
-    private int numSides;
+    private final int numSides;
     private int rollValue;
     private final Random randNum;
 
     public DieObject(int numSides){
         this.randNum = new Random();
-        this.setSides(numSides);
+        this.numSides = numSides <= 1 ? 6 : numSides;
         this.roll();
     }
 
     public DieObject(){ this(6); }
-
-    private void setSides(int numSides) {
-        int defaultSize = 6;
-        if(numSides < 1){
-            this.numSides = defaultSize;
-        }
-        else{
-            this.numSides = numSides;
-        }
-    }
 
     /**
      * rolls a new random integer between 1 and the number of sides
