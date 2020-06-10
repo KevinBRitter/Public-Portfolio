@@ -14,7 +14,9 @@ public class DieObject {
 
     public DieObject(int numSides){
         this.randNum = new Random();
-        this.numSides = numSides <= 1 ? 6 : numSides;
+        int minNumSides = 2;
+        int defaultDieSides = 6;
+        this.numSides = numSides < minNumSides ? defaultDieSides : numSides;
         this.roll();
     }
 
@@ -22,14 +24,9 @@ public class DieObject {
 
     /**
      * rolls a new random integer between 1 and the number of sides
-     * passes the result to the setRollValue method.
      */
     public void roll() {
-        this.setRollValue(this.randNum.nextInt(this.getNumSides()) + 1);
-    }
-
-    private void setRollValue(int setValue){
-        this.rollValue = setValue;
+        this.rollValue = this.randNum.nextInt(this.getNumSides()) + 1;
     }
 
     private int getNumSides() {
