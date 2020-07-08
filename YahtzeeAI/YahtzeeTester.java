@@ -60,5 +60,10 @@ public class YahtzeeTester {
         scoreCard.calculateGrandTotal();
         System.out.println("State:" + scoreCard.getGameState().toString());
         System.out.println(scoreCard.getCard());
+
+        YahtzeeGame gameOne = new YahtzeeGame();
+        gameOne.newGame();
+        gameOne.printScoreCard();
+        System.out.println("State:" + gameOne.getGameState().toString());
     }
 }
