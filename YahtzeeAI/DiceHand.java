@@ -35,6 +35,10 @@ public class DiceHand {
         return this.diceHand.size();
     }
 
+    public int getValue(int i){
+        return this.diceHand.get(i).getRollValue();
+    }
+
     public void rollHand(){
         for(DieObject dieObject: this.getDiceHand()){
             dieObject.roll();

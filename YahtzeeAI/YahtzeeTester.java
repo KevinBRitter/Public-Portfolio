@@ -61,6 +61,22 @@ public class YahtzeeTester {
         System.out.println("State:" + scoreCard.getGameState().toString());
         System.out.println(scoreCard.getCard());
 
+        System.out.println();
+
+        CheckScores scorer = new CheckScores();
+        DiceHand currentHand = new DiceHand();
+        scorer.useDice(currentHand);
+        System.out.println("Hand to score: " + scorer.getHand());
+
+        System.out.println("Ones: " + scorer.getOnesScore());
+        System.out.println("Twos: " + scorer.getTwosScore());
+        System.out.println("Threes: " + scorer.getThreesScore());
+        System.out.println("Fours: " + scorer.getFoursScore());
+        System.out.println("Fives: " + scorer.getFivesScore());
+        System.out.println("Sixes: " + scorer.getSixesScore());
+
+
+
         YahtzeeGame gameOne = new YahtzeeGame();
         gameOne.newGame();
         gameOne.printScoreCard();
