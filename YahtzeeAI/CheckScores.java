@@ -13,23 +13,23 @@ public class CheckScores {
         return this.hand.toString();
     }
 
-    public String getOnesScore() {
-        return String.valueOf(this.count(1));
+    public int getOnesScore() {
+        return (this.count(1));
     }
-    public String getTwosScore() {
-        return String.valueOf(2 * this.count(2));
+    public int getTwosScore() {
+        return (2 * this.count(2));
     }
-    public String getThreesScore() {
-        return String.valueOf(3 * this.count(3));
+    public int getThreesScore() {
+        return (3 * this.count(3));
     }
-    public String getFoursScore() {
-        return String.valueOf(4 * this.count(4));
+    public int getFoursScore() {
+        return (4 * this.count(4));
     }
-    public String getFivesScore() {
-        return String.valueOf(5 * this.count(5));
+    public int getFivesScore() {
+        return (5 * this.count(5));
     }
-    public String getSixesScore() {
-        return String.valueOf(6 * this.count(6));
+    public int getSixesScore() {
+        return (6 * this.count(6));
     }
 
     private int count(int j) {
