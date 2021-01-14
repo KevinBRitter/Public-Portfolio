@@ -1,4 +1,4 @@
-package YahtzeeAI;
+package main.yahtzee;
 
 import java.util.Random;
 

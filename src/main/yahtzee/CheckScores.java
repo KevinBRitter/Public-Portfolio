@@ -1,6 +1,4 @@
-package YahtzeeAI;
-
-import java.util.Collections;
+package main.yahtzee;
 
 public class CheckScores {
     private DiceHand hand;

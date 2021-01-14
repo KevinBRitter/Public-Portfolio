@@ -1,4 +1,4 @@
-package YahtzeeAI;
+package main.yahtzee;
 
 public class YahtzeeGame {
     YahtzeeScoreCard scoreCard;

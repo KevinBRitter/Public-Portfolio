@@ -1,4 +1,6 @@
-package YahtzeeAI;
+package main;
+
+import main.yahtzee.*;
 
 public class YahtzeeTester {
     public static void main(String[] args) {

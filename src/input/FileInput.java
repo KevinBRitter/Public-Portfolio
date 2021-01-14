@@ -1,4 +1,4 @@
-package LibraryIO.input;
+package input;
 
 import java.io.File;
 import java.util.Scanner;
